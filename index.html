@@ -1,112 +1,433 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walimatul 'Ursy Khonsa & Sa'ad</title>
-    
+    <title>Tasyakuran Pernikahan Sa'ad & Khonsa</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        gold: {
-                            light: '#F3E5AB',
-                            DEFAULT: '#D4AF37',
-                            dark: '#AA7C11',
-                            premium: '#C5A880'
-                        },
-                        darkcharcoal: '#121212',
-                    },
-                    fontFamily: {
-                        serif: ['Playfair Display', 'Georgia', 'serif'],
-                        sans: ['Montserrat', 'Inter', 'sans-serif'],
-                        cursive: ['Great Vibes', 'Sacramento', 'cursive']
-                    }
-                }
-            }
-        }
-    </script>
-
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Sacramento&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Custom Luxury Styles & Animations -->
+    
     <style>
-        /* Smooth Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        .font-serif-title { font-family: 'Cinzel', serif; }
+        .font-elegant { font-family: 'Playfair Display', serif; }
+        .font-body { font-family: 'Montserrat', sans-serif; }
+        
+        html {
+            scroll-behavior: smooth;
         }
-        ::-webkit-scrollbar-track {
-            background: #ffffff;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #D4AF37;
-            border-radius: 4px;
-        }
-
-        /* Gold Gradient Text */
-        .text-gold-gradient {
-            background: linear-gradient(135deg, #B38728 0%, #FBF5B7 25%, #DAA520 50%, #FBF5B7 75%, #AA771C 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        
+        /* Custom Background Ornament Pattern using pure CSS shapes or soft gradients */
+        .bg-islamic-pattern {
+            background-color: #faf8f5;
+            background-image: radial-gradient(circle at 100% 150%, #f3ede2 24%, white 25%, white 28%, #f3ede2 29%, #f3ede2 36%, white 36%, white 40%, transparent 40%),
+                              radial-gradient(circle at 0% 150%, #f3ede2 24%, white 25%, white 28%, #f3ede2 29%, #f3ede2 36%, white 36%, white 40%, transparent 40%),
+                              radial-gradient(circle at 50% 100%, #eae1d1 10%, transparent 11%);
+            background-size: 60px 60px;
         }
 
-        /* Gold Border Gradient */
-        .border-gold-gradient {
-            border-image: linear-gradient(to right, #B38728, #FBF5B7, #DAA520, #AA771C) 1;
-        }
-
-        /* Decorative Gold Frame */
-        .gold-frame {
-            position: relative;
-            border: 2px solid transparent;
-            background: linear-gradient(#fff, #fff) padding-box,
-                        linear-gradient(135deg, #B38728, #FBF5B7, #AA771C) border-box;
+        .cover-bg {
+            background: linear-gradient(rgba(44, 53, 43, 0.75), rgba(44, 53, 43, 0.85)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><path d="M30 0 L60 30 L30 60 L0 30 Z" fill="none" stroke="%234d5c4b" stroke-width="0.5"/></svg>');
+            background-size: cover;
+            background-position: center;
         }
 
         /* Animations */
-        @keyframes float-slow {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(3deg); }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .animate-float {
-            animation: float-slow 6s ease-in-out infinite;
+        .animate-fade-in { animation: fadeInUp 1.2s ease forwards; }
+        
+        .music-rotate {
+            animation: rotate 4s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="font-body text-slate-700 bg-[#faf8f5] overflow-x-hidden antialiased selection:bg-[#c0a478] selection:text-white">
+
+    <!-- AUDIO ELEMENT -->
+    <audio id="weddingMusic" loop>
+        <source src="wedding-nasyid.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- MUSIC BUTTON -->
+    <button id="musicControl" class="fixed bottom-6 right-6 z-50 bg-[#c0a478] hover:bg-[#ad9165] text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 transform hover:scale-105 hidden">
+        <i id="musicIcon" class="fas fa-compact-disc text-xl music-rotate"></i>
+    </button>
+
+    <!-- FLOATING NAV BAR -->
+    <nav id="floatingNav" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-white/90 backdrop-blur-md px-6 py-3 rounded-full shadow-xl border border-[#e6dec9] flex items-center space-x-8 text-[#5c6959] transition-all duration-500 transform translate-y-28 opacity-0">
+        <a href="#mempelai" class="hover:text-[#c0a478] flex flex-col items-center text-xs gap-1 transition-colors"><i class="fas fa-heart text-base"></i><span>Mempelai</span></a>
+        <a href="#acara" class="hover:text-[#c0a478] flex flex-col items-center text-xs gap-1 transition-colors"><i class="fas fa-calendar-alt text-base"></i><span>Acara</span></a>
+        <a href="#lokasi" class="hover:text-[#c0a478] flex flex-col items-center text-xs gap-1 transition-colors"><i class="fas fa-map-marker-alt text-base"></i><span>Lokasi</span></a>
+        <a href="#ucapan" class="hover:text-[#c0a478] flex flex-col items-center text-xs gap-1 transition-colors"><i class="fas fa-comment-dots text-base"></i><span>Ucapan</span></a>
+    </nav>
+
+    <!-- 1. COVER / WELCOME SECTION -->
+    <section id="cover" class="fixed inset-0 z-50 cover-bg flex flex-col items-center justify-center text-center px-4 transition-all duration-1000">
+        <div class="max-w-md w-full border border-[#c0a478]/40 p-8 rounded-2xl backdrop-blur-sm bg-[#2c352b]/40 shadow-2xl animate-fade-in text-slate-100">
+            <!-- Decorative Islamic Ornament Top -->
+            <div class="text-[#c0a478] text-3xl mb-4"><i class="fas fa-star-and-crescent"></i></div>
+            
+            <p class="text-[#c0a478] font-medium tracking-widest text-xs uppercase mb-3">Tasyakuran Pernikahan</p>
+            <h1 class="font-serif-title text-3xl md:text-4xl font-bold tracking-wide text-white mb-2">Sa'ad & Khonsa</h1>
+            
+            <div class="w-16 h-[1px] bg-[#c0a478] mx-auto my-6"></div>
+            
+            <!-- Recipient Card -->
+            <div class="bg-white/10 border border-white/20 rounded-xl p-5 mb-8 backdrop-blur-md">
+                <p class="text-xs text-gray-300 italic mb-2">Kepada Yang Terhormat Bapak/Ibu/Saudara/i:</p>
+                <h3 class="font-elegant text-xl font-bold text-[#e6dec9] tracking-wide" id="guestName">Bapak Ali Akhmadi sekeluarga</h3>
+                <p class="text-xs text-gray-400 mt-1">Di tempat</p>
+            </div>
+            
+            <button onclick="openInvitation()" class="bg-[#c0a478] hover:bg-[#ad9165] text-white font-medium px-8 py-3 rounded-full transition-all duration-300 shadow-md hover:shadow-xl transform hover:-translate-y-0.5 tracking-wide text-sm">
+                <i class="fas fa-envelope-open text-xs mr-2"></i> Buka Undangan
+            </button>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT CONTAINER (Hidden initially until opened) -->
+    <div id="mainContent" class="hidden">
+        
+        <!-- 2. HOME / MUQADDIMAH HERO -->
+        <section class="min-h-screen flex flex-col items-center justify-center text-center px-4 bg-islamic-pattern pt-16 pb-20 relative">
+            <!-- Corner Ornaments -->
+            <div class="absolute top-4 left-4 text-[#c0a478]/20 text-5xl"><i class="fas fa-mosque"></i></div>
+            <div class="absolute top-4 right-4 text-[#c0a478]/20 text-5xl"><i class="fas fa-mosque"></i></div>
+
+            <div class="max-w-2xl mx-auto space-y-6 bg-white/60 p-8 rounded-3xl border border-[#e6dec9]/50 backdrop-blur-sm shadow-sm">
+                <p class="font-elegant italic text-lg text-[#5c6959]">Bismillahirrahmanirrahim</p>
+                <p class="font-elegant text-[#5c6959] text-sm md:text-base leading-relaxed max-w-lg mx-auto italic">
+                    "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."
+                </p>
+                <p class="text-xs font-semibold text-[#c0a478] tracking-widest">— Ar-Rum: 21</p>
+                
+                <div class="w-24 h-[1px] bg-[#c0a478] mx-auto my-8"></div>
+                
+                <p class="text-sm font-medium tracking-wide uppercase text-slate-500">Assalamu'alaikum warahmatullahi wabarakatuh</p>
+                <p class="text-sm text-slate-600 leading-relaxed max-w-xl mx-auto">
+                    Dengan memohon rahmat dan ridha Allah Azza wa Jalla, kami mengharapkan kehadiran Bapak/Ibu/Saudara/i pada acara tasyakuran pernikahan putra-putri kami:
+                </p>
+            </div>
+        </section>
+
+        <!-- 3. MEMPELAI SECTION -->
+        <section id="mempelai" class="py-24 bg-white border-t border-b border-[#e6dec9]/40 relative">
+            <div class="max-w-4xl mx-auto px-4 text-center">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative">
+                    <!-- Splitter Center Line/Icon for desktop -->
+                    <div class="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[#c0a478] text-4xl bg-white p-4 rounded-full z-10 font-elegant italic">
+                        &
+                    </div>
+
+                    <!-- Groom -->
+                    <div class="space-y-4 p-8 rounded-2xl bg-[#faf8f5] border border-[#e6dec9]/60 shadow-sm hover:shadow-md transition-shadow">
+                        <span class="inline-block p-4 rounded-full bg-[#c0a478]/10 text-[#c0a478] text-2xl mb-2"><i class="fas fa-user-tie"></i></span>
+                        <h2 class="font-serif-title text-2xl font-bold text-[#5c6959]">Abdullah Sa'ad</h2>
+                        <p class="text-xs text-[#c0a478] font-semibold tracking-wider uppercase">Mempelai Pria</p>
+                        <p class="text-sm text-slate-600 font-medium leading-relaxed mt-4">
+                            Putra dari <br>
+                            <span class="text-slate-800 font-semibold text-base">Bapak Budiono, Ibu Ratini, & Ibu Husnul Khatimah</span>
+                        </p>
+                    </div>
+
+                    <!-- Bride -->
+                    <div class="space-y-4 p-8 rounded-2xl bg-[#faf8f5] border border-[#e6dec9]/60 shadow-sm hover:shadow-md transition-shadow">
+                        <span class="inline-block p-4 rounded-full bg-[#c0a478]/10 text-[#c0a478] text-2xl mb-2"><i class="fas fa-user-nurse"></i></span>
+                        <h2 class="font-serif-title text-2xl font-bold text-[#5c6959]">Khonsa Iftinal Fikri</h2>
+                        <p class="text-xs text-[#c0a478] font-semibold tracking-wider uppercase">Mempelai Wanita</p>
+                        <p class="text-sm text-slate-600 font-medium leading-relaxed mt-4">
+                            Putri dari <br>
+                            <span class="text-slate-800 font-semibold text-base">Bapak Aris Widhiyanto & Ibu Tisngatun Wakingah</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. ACARA & COUNTDOWN SECTION -->
+        <section id="acara" class="py-24 bg-islamic-pattern text-center px-4">
+            <div class="max-w-3xl mx-auto">
+                <span class="text-[#c0a478] text-3xl block mb-2"><i class="calendar-days font-awesome text-xl"></i></span>
+                <h2 class="font-serif-title text-3xl font-bold text-[#5c6959] tracking-wide mb-12">Agenda Tasyakuran</h2>
+
+                <!-- Countdown Timer -->
+                <div class="grid grid-cols-4 gap-2 md:gap-4 max-w-md mx-auto mb-16">
+                    <div class="bg-white border border-[#e6dec9] p-4 rounded-xl shadow-sm">
+                        <span id="days" class="block font-serif-title text-2xl md:text-3xl font-bold text-[#c0a478]">00</span>
+                        <span class="text-[10px] uppercase font-semibold text-slate-400 tracking-wider">Hari</span>
+                    </div>
+                    <div class="bg-white border border-[#e6dec9] p-4 rounded-xl shadow-sm">
+                        <span id="hours" class="block font-serif-title text-2xl md:text-3xl font-bold text-[#c0a478]">00</span>
+                        <span class="text-[10px] uppercase font-semibold text-slate-400 tracking-wider">Jam</span>
+                    </div>
+                    <div class="bg-white border border-[#e6dec9] p-4 rounded-xl shadow-sm">
+                        <span id="minutes" class="block font-serif-title text-2xl md:text-3xl font-bold text-[#c0a478]">00</span>
+                        <span class="text-[10px] uppercase font-semibold text-slate-400 tracking-wider">Menit</span>
+                    </div>
+                    <div class="bg-white border border-[#e6dec9] p-4 rounded-xl shadow-sm">
+                        <span id="seconds" class="block font-serif-title text-2xl md:text-3xl font-bold text-[#c0a478]">00</span>
+                        <span class="text-[10px] uppercase font-semibold text-slate-400 tracking-wider">Detik</span>
+                    </div>
+                </div>
+
+                <!-- Detail Card -->
+                <div class="max-w-xl mx-auto bg-white border border-[#e6dec9] rounded-3xl shadow-xl p-8 md:p-12 space-y-6 relative overflow-hidden">
+                    <div class="absolute top-0 inset-x-0 h-2 bg-[#c0a478]"></div>
+                    
+                    <h3 class="font-elegant text-2xl font-semibold text-[#5c6959]">Waktu Pelaksanaan</h3>
+                    <div class="w-12 h-[1px] bg-[#c0a478] mx-auto"></div>
+                    
+                    <div class="space-y-4 text-slate-600">
+                        <div class="flex items-center justify-center space-x-3">
+                            <i class="far fa-calendar-check text-[#c0a478] text-lg"></i>
+                            <p class="font-semibold text-lg text-slate-800">Sabtu, 18 Juli 2026</p>
+                        </div>
+                        <div class="flex items-center justify-center space-x-3">
+                            <i class="far fa-clock text-[#c0a478] text-lg"></i>
+                            <p class="font-medium">Pukul 09.00 WIB s.d. Selesai</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-6">
+                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Tasyakuran+Pernikahan+Sa%27ad+%26+Khonsa&dates=20260718T020000Z/20260718T070000Z&details=Tasyakuran+Pernikahan+Abdullah+Sa%27ad+%26+Khonsa+Iftinal+Fikri&location=Toko+Shofi+Samping+KUA+Genuk+RT+01+RW+01+Genuksari+Genuk+Semarang" target="_blank" class="inline-flex items-center space-x-2 bg-[#5c6959] hover:bg-[#495446] text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase shadow transition-all duration-300 transform hover:-translate-y-0.5">
+                            <i class="fab fa-google"></i>
+                            <span>Simpan Kalender</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. LOKASI SECTION -->
+        <section id="lokasi" class="py-24 bg-white px-4 text-center">
+            <div class="max-w-3xl mx-auto space-y-8">
+                <span class="text-[#c0a478] text-3xl block"><i class="fas fa-map-location-dot"></i></span>
+                <h2 class="font-serif-title text-3xl font-bold text-[#5c6959] tracking-wide">Lokasi Acara</h2>
+                
+                <div class="max-w-xl mx-auto space-y-4">
+                    <h3 class="font-serif-title text-xl font-bold text-slate-800">Toko Shofi</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed px-4">
+                        (Samping KUA Genuk), RT 01/RW 01 Genuksari, Kec. Genuk, Kota Semarang, Jawa Tengah
+                    </p>
+                </div>
+
+                <!-- Google Maps Interactive Iframe Wrapper -->
+                <div class="max-w-2xl mx-auto rounded-3xl overflow-hidden shadow-2xl border-4 border-white ring-1 ring-[#e6dec9] h-96 bg-slate-100">
+                    <!-- Dynamic map embedded for KUA Genuk area -->
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m2!1m3!1d3960.31758079632!2d110.4727581!3d-6.9718296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708c4e47cfd21f%3A0x6b68079ba7d7f8d7!2sKUA%20Kecamatan%20Genuk!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
+                        class="w-full h-full border-0" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+
+                <div class="pt-4">
+                    <a href="https://maps.google.com/?q=-6.9718296,110.4727581" target="_blank" class="inline-flex items-center space-x-2 bg-[#c0a478] hover:bg-[#ad9165] text-white px-8 py-3 rounded-full text-sm font-semibold shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
+                        <i class="fas fa-directions"></i>
+                        <span>Buka Google Maps</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. UCAPAN & DOA (INTERACTIVE) -->
+        <section id="ucapan" class="py-24 bg-islamic-pattern px-4">
+            <div class="max-w-xl mx-auto bg-white/80 border border-[#e6dec9] rounded-3xl shadow-xl p-8 backdrop-blur-sm">
+                <div class="text-center mb-8">
+                    <span class="text-[#c0a478] text-2xl block mb-2"><i class="fas fa-comments"></i></span>
+                    <h2 class="font-serif-title text-2xl font-bold text-[#5c6959]">Kirim Doa & Ucapan</h2>
+                    <p class="text-xs text-slate-500 mt-1">Berikan doa restu Anda kepada kedua mempelai</p>
+                </div>
+
+                <!-- Form -->
+                <form id="wishForm" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Nama Anda</label>
+                        <input type="text" id="formName" required class="w-full px-4 py-2.5 rounded-xl border border-[#e6dec9] bg-white/70 focus:outline-none focus:ring-2 focus:ring-[#c0a478]/50 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Konfirmasi Kehadiran</label>
+                        <select id="formStatus" class="w-full px-4 py-2.5 rounded-xl border border-[#e6dec9] bg-white/70 focus:outline-none focus:ring-2 focus:ring-[#c0a478]/50 text-sm">
+                            <option value="Hadir">Insya Allah Hadir</option>
+                            <option value="Tidak Hadir">Maaf, Berhalangan Hadir</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Pesan / Doa Restu</label>
+                        <textarea id="formMessage" rows="3" required class="w-full px-4 py-2.5 rounded-xl border border-[#e6dec9] bg-white/70 focus:outline-none focus:ring-2 focus:ring-[#c0a478]/50 text-sm"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-[#5c6959] hover:bg-[#495446] text-white font-semibold py-2.5 rounded-xl text-sm transition-colors duration-300 shadow">
+                        Kirim Ucapan <i class="fas fa-paper-plane text-xs ml-1"></i>
+                    </button>
+                </form>
+
+                <!-- Dynamic Wish List Box -->
+                <div class="mt-8 pt-8 border-t border-[#e6dec9] max-h-60 overflow-y-auto space-y-4" id="wishList">
+                    <!-- Default Seeded Message -->
+                    <div class="bg-white/50 border border-[#e6dec9]/40 p-4 rounded-xl text-xs space-y-1 shadow-sm">
+                        <div class="flex justify-between items-center">
+                            <span class="font-semibold text-slate-800 text-sm">Bapak Ali Akhmadi</span>
+                            <span class="px-2 py-0.5 bg-green-100 text-green-700 font-medium rounded text-[9px] uppercase tracking-wider">Hadir</span>
+                        </div>
+                        <p class="text-slate-600 italic mt-1">"Selamat atas tasyakuran pernikahan Ananda Sa'ad dan Khonsa. Semoga menjadi keluarga sakinah mawaddah warahmah, berkah dunia dan akhirat. Aamiin."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. FOOTER / OUTRO -->
+        <footer class="py-16 bg-[#2c352b] text-white text-center px-4 relative overflow-hidden">
+            <div class="max-w-md mx-auto space-y-6 relative z-10">
+                <p class="text-sm text-gray-300">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu kepada kedua mempelai.</p>
+                <p class="text-sm text-[#c0a478] font-medium tracking-wide uppercase">Atas kehadiran dan doa restunya, kami mengucapkan terima kasih.</p>
+                <p class="font-elegant italic text-sm text-gray-400">Wassalamu'alaikum warahmatullahi wabarakatuh</p>
+                
+                <div class="pt-8 space-y-1">
+                    <p class="text-xs text-gray-500 uppercase tracking-widest">Kami yang mengundang,</p>
+                    <p class="font-serif-title font-semibold text-[#e6dec9] text-lg">Keluarga Bapak Budiono</p>
+                    <p class="text-xs text-gray-400">& Kedua Mempelai (Sa'ad & Khonsa)</p>
+                </div>
+            </div>
+            <!-- Decorative Subtle Accent Logo -->
+            <div class="absolute -bottom-10 -right-10 text-white/5 text-9xl pointer-events-none"><i class="fas fa-star-and-crescent"></i></div>
+        </footer>
+
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Extract parameters from URL if needed (e.g. ?to=Bapak+Ali+Akhmadi)
+        const urlParams = new URLSearchParams(window.location.search);
+        const guestParam = urlParams.get('to');
+        if (guestParam) {
+            document.getElementById('guestName').innerText = guestParam;
+            document.getElementById('formName').value = guestParam.replace(' sekeluarga', '');
         }
 
-        @keyframes pulse-gold {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.05); opacity: 1; }
-        }
-        .animate-pulse-gold {
-            animation: pulse-gold 3s ease-in-out infinite;
+        const audio = document.getElementById('weddingMusic');
+        const musicControl = document.getElementById('musicControl');
+        const musicIcon = document.getElementById('musicIcon');
+
+        // Main Buka Undangan Function
+        function openInvitation() {
+            // Hide Cover with sliding down/fading
+            const cover = document.getElementById('cover');
+            cover.style.opacity = '0';
+            setTimeout(() => {
+                cover.style.display = 'none';
+                // Show Main Content
+                document.getElementById('mainContent').classList.remove('hidden');
+                // Unhide navigation and play music
+                document.getElementById('floatingNav').classList.remove('translate-y-28', 'opacity-0');
+                musicControl.classList.remove('hidden');
+                
+                // Play audio safely
+                audio.play().then(() => {
+                    isMusicPlaying = true;
+                }).catch(err => console.log("Autoplay blocked/prevented until interaction."));
+            }, 800);
         }
 
-        /* Scroll Animation Triggers */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        // Music Control Toggling
+        let isMusicPlaying = false;
+        musicControl.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                audio.pause();
+                musicIcon.classList.remove('music-rotate');
+                musicIcon.classList.replace('fa-compact-disc', 'fa-play');
+                isMusicPlaying = false;
+            } else {
+                audio.play();
+                musicIcon.classList.add('music-rotate');
+                musicIcon.classList.replace('fa-play', 'fa-compact-disc');
+                isMusicPlaying = true;
+            }
+        });
 
-        /* Particle Overlay */
-        #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        // Countdown Timer Logic
+        const targetDate = new Date("Jul 18, 2026 09:00:00").getTime();
+
+        const countdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+            }
+        }, 1000);
+
+        // Interactive Wishes Form Logic
+        const wishForm = document.getElementById('wishForm');
+        const wishList = document.getElementById('wishList');
+
+        wishForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('formName').value;
+            const status = document.getElementById('formStatus').value;
+            const message = document.getElementById('formMessage').value;
+
+            // Create new comment element dynamically
+            const wrapper = document.createElement('div');
+            wrapper.className = "bg-white/50 border border-[#e6dec9]/40 p-4 rounded-xl text-xs space-y-1 shadow-sm transition-all duration-500 transform scale-95 opacity-0";
+            
+            const badgeColor = status === 'Hadir' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700';
+
+            wrapper.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="font-semibold text-slate-800 text-sm">${name}</span>
+                    <span class="px-2 py-0.5 ${badgeColor} font-medium rounded text-[9px] uppercase tracking-wider">${status}</span>
+                </div>
+                <p class="text-slate-600 italic mt-1">"${message}"</p>
+            `;
+
+            wishList.insertBefore(wrapper, wishList.firstChild);
+            
+            // Trigger animate-in
+            setTimeout(() => {
+                wrapper.classList.remove('scale-95', 'opacity-0');
+            }, 50);
+
+            // Reset form
+            document.getElementById('formMessage').value = '';
+        });
+    </script>
+</body>
+</html>
+"""
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print("SUCCESS: index.html generated.")            height: 100%;
             pointer-events: none;
             z-index: 10;
         }
